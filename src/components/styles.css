@@ -1,0 +1,30 @@
+.wrapper-horizontal {
+    display: flex;
+    min-width: 100%;
+    min-height: 200px;
+    overflow-x: auto;
+    padding-top:7px;    
+}
+.card {
+    min-width: 200px;
+    min-height: 200px;
+    padding:0px;
+    margin: 10px;
+    background-image: url('http://fillmurray.com/200/200')
+}
+
+.location-gallery {
+    padding-left:40px;
+}
+
+/* Nav Bar */
+.navbar {
+    background-color: #2B3031;
+    height: 40px;
+    color: #ffffff
+}
+
+/* Colors */
+.magenta {
+    background-color: #ed135d
+}
