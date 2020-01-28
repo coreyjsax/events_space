@@ -8,17 +8,31 @@ import {
 import logo from './logo.svg';
 import './App.css';
 import 'antd/dist/antd.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Restful, {FetchData} from "./tools/Restful"
 
 import Home from './components/Home'
 
 function App() {
 
   const [locations, setLocations] = useState()
+  const [eventSpaces, setEventSpaces] = useState()
 
   useEffect(() => {
-      
-  })
-
+    const runEffect = async () => {
+      Promise.all([FetchData('events_space'), FetchData('location')])
+        .then(([eventSpaces, locations]) => {
+          setLocations(locations)
+          setEventSpaces(eventSpaces)
+      })
+      .catch(err => err)
+    }
+    runEffect()
+    
+  }, [setLocations])
+  
+  console.log(locations)
+  console.log(eventSpaces)
   return (
     <Router>
       <div>
@@ -46,8 +60,11 @@ function App() {
             <Users />
           </Route>
           <Route path="/">
-            <Home />
+            <Home Title="title" 
+                  Locations={locations}
+            />
           </Route>
+         
         </Switch>
       </div>
     </Router>

@@ -21,11 +21,14 @@ class Home extends React.Component {
     }
     refreshData(){
         return Promise.all([FetchData('events_space'), FetchData('location')])
-        .then(([eventsSpaces, locations]) => this.setState({eventSpaces: Array.from(eventsSpaces), locations: Array.from(locations)}))
+        .then(([eventsSpaces, locations]) => this.setState(
+            {eventSpaces: Array.from(eventsSpaces), locations: Array.from(locations)}
+        ))
         .catch(err => err)
     }
     render(){
         console.log(this.state)
+        console.log(this.props)
         return (
             <div>
                 <Masthead />
@@ -33,7 +36,8 @@ class Home extends React.Component {
                 <Hero />
                 <Locations 
                     eventSpaces={this.state.eventSpaces} 
-                    locations={this.state.locations}
+                    locations={this.props.Locations}
+                    Title={this.props.Title}
                 />
             </div>
         )
