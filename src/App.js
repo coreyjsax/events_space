@@ -17,13 +17,21 @@ function App() {
 
   const [locations, setLocations] = useState()
   const [eventSpaces, setEventSpaces] = useState()
+  const [menu, setMenu] = useState()
+  const [items, setItems] = useState()
+  const [tags, setTags] = useState()
+
+  const menuId = '5df839139acb21180961d550'
 
   useEffect(() => {
     const runEffect = async () => {
-      Promise.all([FetchData('events_space'), FetchData('location')])
-        .then(([eventSpaces, locations]) => {
+      Promise.all([FetchData('events_space'), FetchData('location'), FetchData('menu', menuId), FetchData('item'), FetchData('tag')])
+        .then(([eventSpaces, locations, menu, items, tags]) => {
           setLocations(locations)
           setEventSpaces(eventSpaces)
+          setMenu(menu)
+          setItems(items)
+          setTags(tags)
       })
       .catch(err => err)
     }
@@ -33,37 +41,25 @@ function App() {
   
   console.log(locations)
   console.log(eventSpaces)
+  console.log(menu)
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/users">Users</Link>
-            </li>
-          </ul>
-        </nav>
+        
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
-          <Route path="/">
+         
+          
             <Home Title="title" 
                   Locations={locations}
+                  EventSpaces={eventSpaces}
+                  Menu={menu}
+                  Items={items}
+                  Tags={tags}
             />
-          </Route>
+          
          
         </Switch>
       </div>

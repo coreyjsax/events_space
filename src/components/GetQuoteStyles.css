@@ -1,0 +1,13 @@
+.get-quote {
+    background-color: #000000;
+    color: #ffffff;
+    
+}
+
+.item-card {
+    max-width: 150px;
+    min-width: 150px;
+    margin:3px;
+    background-color: #212121;
+    height: 150px;
+}

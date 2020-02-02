@@ -44,6 +44,7 @@ class Locations extends React.Component {
                     currentSpace={this.state.currentSpace}
                     Title={this.props.Title}
                     Locations={this.props.locations}
+                    
                 />
             </div>
             </>

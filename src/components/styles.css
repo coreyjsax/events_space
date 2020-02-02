@@ -23,8 +23,26 @@
     height: 40px;
     color: #ffffff
 }
+.nav-link {
+    color: #ffffff;
+}
+.nav-link:hover {
+    color: #ed135d;
+}
+
+/* Get Qoute */
+.get-quote {
+    background-color: #000000;
+    color: #ed135d;
+    padding: 20px;
+    
+}
+
+
 
 /* Colors */
 .magenta {
     background-color: #ed135d
 }
+
+

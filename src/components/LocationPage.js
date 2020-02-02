@@ -43,10 +43,8 @@ class LocationPage extends React.Component {
                 <Container>
                     <Route 
                         path="/location/:id" 
-                        render={(props) => <Test2 locations={this.state.locations} eventSpaces={this.state.eventSpaces} currentPage={this.props.currentSpace} {...props} />}
+                        render={(props) => <Test2 locations={this.state.locations} eventSpaces={this.state.eventSpaces} currentPage={this.props.currentSpace} menu={this.props.Menu} {...props} />}
                     />
-                    
-                        
                 </Container>
                
             </>

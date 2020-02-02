@@ -2,7 +2,10 @@ export async function FetchData(model, id){
     let url, options
 
     !id ? url = `https:beta.pizzaluce.com/api/${model}`
-        : url = `http://localhost:5000/api/${model}/${id}`
+        : model != 'menu' ? url = `https://beta.pizzaluce.com/api/${model}/${id}`
+            : url = `https://beta.pizzaluce.com/api/${model}/${id}/full`
+
+    
 
     try {
         const res = await fetch(url, options)

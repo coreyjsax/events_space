@@ -7,7 +7,7 @@ const Gallery = (props) => {
 
     let spaces = Array.from(props.eventSpaces)
     let setTab = props.setTab
-     console.log(props)
+
     return (
         <div className="wrapper-horizontal">
            {
@@ -21,8 +21,6 @@ const Gallery = (props) => {
                                 currentSpace: space
                             }
                         }}
-                        
-
                     > 
                    
                     <img 
