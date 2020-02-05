@@ -3,14 +3,17 @@ import { Container, FormGroup, Label} from 'reactstrap'
 
 import { Select, Card, Drawer, Form, Button, Col, Row, Icon } from 'antd'
 import getQuoteStyles from '../components/GetQuoteStyles.css'
-const Option = {Select}
+const {Option} = Select
 
 class GetQuotePg2 extends React.Component {
     constructor(props){
         super(props)
         this.state = {
             drawerVisible: false,
-            selectedItem: ''
+            selectedItem: '',
+            selectedItemTags: '',
+            selectedItemChosenTag: '',
+            selectedItemPriceByTag: ''
         }
         //this.convertToParty = this.convertToParty.bind(this)
     }
@@ -22,6 +25,12 @@ class GetQuotePg2 extends React.Component {
     }
     convertToParty = (menu) => {
         
+    }
+    handleDiet = (e) => {
+        this.setState({selectedItemChosenTag: e})
+    }
+    handlePrice = (e) => {
+        this.setState({selectedItemChosenSize: e})
     }
     selectItem  = (e, id) => {
         let items = this.props.items
@@ -36,10 +45,18 @@ class GetQuotePg2 extends React.Component {
                 newTag = newTag[0]
                 return newTag
         })
-        console.log(fullTags)
-        console.log(selectedItemTags)
-        this.setState({selectedItem: selectedItem})
+
+        this.setState({selectedItem: selectedItem, selectedItemTags: fullTags})
         this.showDrawer()
+    }
+    getItemPrices = (itemTag, itemSize) => {
+    
+        let itemPrices = this.state.selectedItem[0].prices
+        let itemPricesByTag = itemPrices.filter(price => price.diet == itemTag.toLowerCase())
+            //itemPricesByTag = itemPricesByTag.toLowerCase()
+           
+       return itemPricesByTag
+        
     }
     render(){
         console.log(this.props)
@@ -87,12 +104,43 @@ class GetQuotePg2 extends React.Component {
                         </Row>
                         <Row gutter={16}>
                             <Col span={12}>
-                                <Select size={"large"} mode="tags" style={{width: '100%'}} placeholder="Select dietary">
-                                   
+                                <Select 
+                                    size={"large"} 
+                                    style={{width: '100%'}} 
+                                    placeholder="Select dietary"
+                                    onChange={(e) => this.handleDiet(e)}
+                                >
+                                        <Option key="reg">regular</Option>
+                                    {this.state.selectedItemTags.map(tag => {
+                                        if (tag.name.value == "gfr" || tag.name.value == "vr"){
+                                            return (
+                                            <Option 
+                                                key={tag._id} 
+                                                value={tag.name.value == "vr" ? "VR" : tag.name.value == "gfr" ? "GFR" : "reg"}
+                                            >
+                                                {tag.name.label}
+                                            </Option>
+                                        )}
+                                        
+                                    })}
                                 </Select>
                             </Col>
                             <Col span={12}>
-                                col 2
+                                <Select
+                                    size={'large'}
+                                    style={{width: '100%'}}
+                                    placeholder="Select Size"
+                                    onChange={(e) => this.handlePrice(e)}
+                                >
+                                   {
+                                       this.getItemPrices(this.state.selectedItemChosenTag).map((price, i) => (
+                                        <Option key={i}>{price.size}</Option>
+                                       ))
+                                           
+                                    
+                                   }
+                                </Select>
+                               
                             </Col>
                         </Row>
                     </div>
