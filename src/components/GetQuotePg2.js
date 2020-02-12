@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, FormGroup, Label} from 'reactstrap'
+import { Container, FormGroup, Label, ListGroupItemHeading} from 'reactstrap'
 
 import { Select, Card, Drawer, Form, Button, Col, Row, Icon } from 'antd'
 import getQuoteStyles from '../components/GetQuoteStyles.css'
@@ -13,7 +13,8 @@ class GetQuotePg2 extends React.Component {
             selectedItem: '',
             selectedItemTags: '',
             selectedItemChosenTag: '',
-            selectedItemPriceByTag: ''
+            selectedItemPriceByTag: '',
+            selectedItemPrice: ''
         }
         //this.convertToParty = this.convertToParty.bind(this)
     }
@@ -27,10 +28,15 @@ class GetQuotePg2 extends React.Component {
         
     }
     handleDiet = (e) => {
-        this.setState({selectedItemChosenTag: e})
+        this.setState({selectedItemChosenTag: e, selectedItemPrice: ''})
     }
     handlePrice = (e) => {
-        this.setState({selectedItemChosenSize: e})
+        let item = this.state.selectedItem[0]
+        let itemPrices = item.prices
+        let currentPrice = itemPrices.filter(price => price.size == e)
+            currentPrice = currentPrice.filter(price => price.diet == this.state.selectedItemChosenTag.toLowerCase())
+        
+        this.setState({selectedItemChosenSize: e, selectedItemPrice: currentPrice})
     }
     selectItem  = (e, id) => {
         let items = this.props.items
@@ -134,14 +140,22 @@ class GetQuotePg2 extends React.Component {
                                 >
                                    {
                                        this.getItemPrices(this.state.selectedItemChosenTag).map((price, i) => (
-                                        <Option key={i}>{price.size}</Option>
+                                        <Option key={i} value={price.size}>{price.size}</Option>
                                        ))
                                            
-                                    
                                    }
                                 </Select>
                                
                             </Col>
+                        </Row>
+                        <Row>
+                                {this.state.selectedItemPrice  
+                                    ?   <span>
+                                            {this.state.selectedItemPrice[0].diet} {this.state.selectedItemPrice[0].size} {this.state.selectedItemPrice[0].amount}
+                                        </span> 
+                                    :   <span>"Select dietary preference"</span>
+                                }
+                            
                         </Row>
                     </div>
                     
