@@ -5,8 +5,6 @@ export async function FetchData(model, id){
         : model != 'menu' ? url = `https://beta.pizzaluce.com/api/${model}/${id}`
             : url = `https://beta.pizzaluce.com/api/${model}/${id}/full`
 
-    
-
     try {
         const res = await fetch(url, options)
         const json = await res.json()

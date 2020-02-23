@@ -24,9 +24,6 @@ class GetQuotePg2 extends React.Component {
     hideDrawer = () => {
         this.setState({drawerVisible: false})
     }
-    convertToParty = (menu) => {
-        
-    }
     handleDiet = (e) => {
         this.setState({selectedItemChosenTag: e, selectedItemPrice: ''})
     }
@@ -64,11 +61,14 @@ class GetQuotePg2 extends React.Component {
        return itemPricesByTag
         
     }
+    addItemToEstimate = (e) => {
+        console.log(e)
+    }
     render(){
         console.log(this.props)
         console.log(this.state)
         let menu = this.props.menu[0]
-        this.convertToParty(menu)
+        
         return (
             <div>
                 <div>My Estimate</div>
@@ -132,30 +132,38 @@ class GetQuotePg2 extends React.Component {
                                 </Select>
                             </Col>
                             <Col span={12}>
-                                <Select
-                                    size={'large'}
-                                    style={{width: '100%'}}
-                                    placeholder="Select Size"
-                                    onChange={(e) => this.handlePrice(e)}
-                                >
-                                   {
-                                       this.getItemPrices(this.state.selectedItemChosenTag).map((price, i) => (
-                                        <Option key={i} value={price.size}>{price.size}</Option>
-                                       ))
-                                           
-                                   }
-                                </Select>
-                               
+                                {this.state.selectedItemChosenTag 
+                                    ?   <div>
+                                            <Select
+                                                size={'large'}
+                                                style={{width: '100%'}}
+                                                placeholder="Select Size"
+                                                onChange={(e) => this.handlePrice(e)}
+                                            >
+                                            {
+                                                this.getItemPrices(this.state.selectedItemChosenTag).map((price, i) => (
+                                                    <Option key={i} value={price.size}>{price.size}</Option>
+                                                ))  
+                                            }
+                                            </Select>
+                                        </div>
+                                    :   <div>
+
+                                        </div>
+                                }
                             </Col>
                         </Row>
                         <Row>
-                                {this.state.selectedItemPrice  
-                                    ?   <span>
-                                            {this.state.selectedItemPrice[0].diet} {this.state.selectedItemPrice[0].size} {this.state.selectedItemPrice[0].amount}
-                                        </span> 
-                                    :   <span>"Select dietary preference"</span>
-                                }
-                            
+                            {this.state.selectedItemPrice  
+                                ?   <>
+                                    <span>
+                                        {this.state.selectedItemPrice[0].diet} {this.state.selectedItemPrice[0].size} {this.state.selectedItemPrice[0].amount}
+                                    </span> 
+                                    <Button onClick={(e) => this.props.addItemToCart(this.state.selectedItem)}>add to estimate</Button>
+                                    </>
+                                :   <span>"Select dietary preference"</span>
+                            }
+                        
                         </Row>
                     </div>
                     

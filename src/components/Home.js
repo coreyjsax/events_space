@@ -17,7 +17,8 @@ class Home extends React.Component {
             QuoteName: '',
             QuoteEmail: '',
             QuoteDate: '',
-            QuotePhone: ''
+            QuotePhone: '',
+            cart: []
         }
         this.refreshData = this.refreshData.bind(this)
         this.handleInput = this.handleInput.bind(this)
@@ -25,6 +26,12 @@ class Home extends React.Component {
 
     componentDidMount(){
         this.refreshData()
+    }
+    addItemToCart = (item) => {
+        let tempCart = this.state.cart
+        tempCart.push(item[0])
+        console.log(tempCart.length)
+        this.setState({cart: tempCart})
     }
     refreshData(){
         return Promise.all([FetchData('events_space'), FetchData('location')])
@@ -42,10 +49,11 @@ class Home extends React.Component {
     render(){
         console.log(this.state)
         console.log(this.props)
+        console.log(`cart contents: ${this.state.cart}`)
         return (
             <div>
                 <Masthead />
-                <Nav />
+                <Nav cart={this.state.cart} />
                 
                 <Route path="/" render={(props) => <Hero locations={this.state.locations} eventSpaces={this.state.eventSpaces} {...props}/>} />
                 <Route path="/plan" render={(props) => (
@@ -57,6 +65,7 @@ class Home extends React.Component {
                         menu={this.props.Menu} {...props}
                         items={this.props.Items}
                         tags={this.props.Tags}
+                        addItemToCart={this.addItemToCart}
                     /> )} 
                 /> 
                 <Locations 
@@ -64,6 +73,7 @@ class Home extends React.Component {
                     locations={this.props.Locations}
                     Title={this.props.Title}
                     menu={this.props.Menu}
+                    
                 />
                
                 <div>Download our full menu here</div>

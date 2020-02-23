@@ -102,7 +102,7 @@ class GetQuote extends React.Component {
                     : <span></span>
                     }
                     {this.state.currentFormPage == 1 ?
-                        <GetQuotePg2 menu={this.props.menu} items={this.props.items} tags={this.props.tags} />
+                        <GetQuotePg2 menu={this.props.menu} items={this.props.items} tags={this.props.tags} addItemToCart={this.props.addItemToCart}/>
                         : <span></span>
                     }
                     {this.state.currentFormPage == 2 ?
