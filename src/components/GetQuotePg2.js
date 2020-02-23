@@ -1,6 +1,6 @@
 import React from 'react'
 import { Container, FormGroup, Label, ListGroupItemHeading} from 'reactstrap'
-
+import Estimate from './Estimate'
 import { Select, Card, Drawer, Form, Button, Col, Row, Icon } from 'antd'
 import getQuoteStyles from '../components/GetQuoteStyles.css'
 const {Option} = Select
@@ -71,7 +71,7 @@ class GetQuotePg2 extends React.Component {
         
         return (
             <div>
-                <div>My Estimate</div>
+               
                 {menu.sections.map(section => (
                     <>
                     <p className="pink">{section.name.label}</p>
@@ -92,6 +92,7 @@ class GetQuotePg2 extends React.Component {
                     </div>
                     </>
                 ))}
+                <Estimate cart={this.props.cart} categories={this.props.categories}/>
                 <Drawer
                     title={this.state.selectedItem ? 
                         this.state.selectedItem[0].name.label : 'loading...'}
@@ -159,7 +160,7 @@ class GetQuotePg2 extends React.Component {
                                     <span>
                                         {this.state.selectedItemPrice[0].diet} {this.state.selectedItemPrice[0].size} {this.state.selectedItemPrice[0].amount}
                                     </span> 
-                                    <Button onClick={(e) => this.props.addItemToCart(this.state.selectedItem)}>add to estimate</Button>
+                                    <Button onClick={(e) => this.props.addItemToCart(this.state.selectedItem, this.state.selectedItemPrice)}>add to estimate</Button>
                                     </>
                                 :   <span>"Select dietary preference"</span>
                             }

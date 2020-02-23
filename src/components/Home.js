@@ -14,6 +14,7 @@ class Home extends React.Component {
         this.state = {
             eventSpaces: '',
             locations: '',
+            categories: '',
             QuoteName: '',
             QuoteEmail: '',
             QuoteDate: '',
@@ -27,16 +28,21 @@ class Home extends React.Component {
     componentDidMount(){
         this.refreshData()
     }
-    addItemToCart = (item) => {
+    addItemToCart = (item, itemPrice) => {
         let tempCart = this.state.cart
+        item[0].prices = itemPrice
         tempCart.push(item[0])
         console.log(tempCart.length)
+        console.log(itemPrice)
         this.setState({cart: tempCart})
     }
     refreshData(){
-        return Promise.all([FetchData('events_space'), FetchData('location')])
-        .then(([eventsSpaces, locations]) => this.setState(
-            {eventSpaces: Array.from(eventsSpaces), locations: Array.from(locations)}
+        return Promise.all([FetchData('events_space'), FetchData('location'), FetchData('category')])
+        .then(([eventsSpaces, locations, category]) => this.setState(
+            {   eventSpaces: Array.from(eventsSpaces), 
+                locations: Array.from(locations), 
+                categories: Array.from(category)
+            }
         ))
         .catch(err => err)
     }
@@ -58,7 +64,8 @@ class Home extends React.Component {
                 <Route path="/" render={(props) => <Hero locations={this.state.locations} eventSpaces={this.state.eventSpaces} {...props}/>} />
                 <Route path="/plan" render={(props) => (
                     <GetQuote 
-                        locations={this.state.locations} 
+                        locations={this.state.locations}
+                        categories={this.state.categories}
                         eventSpaces={this.state.eventSpaces} 
                         handleInput={this.handleInput} 
                         name={this.state.getQuoteName} 
@@ -66,7 +73,9 @@ class Home extends React.Component {
                         items={this.props.Items}
                         tags={this.props.Tags}
                         addItemToCart={this.addItemToCart}
+                        cart={this.state.cart}
                     /> )} 
+                    
                 /> 
                 <Locations 
                     eventSpaces={this.state.eventSpaces} 
