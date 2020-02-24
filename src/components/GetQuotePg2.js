@@ -92,7 +92,7 @@ class GetQuotePg2 extends React.Component {
                     </div>
                     </>
                 ))}
-                <Estimate cart={this.props.cart} categories={this.props.categories}/>
+                
                 <Drawer
                     title={this.state.selectedItem ? 
                         this.state.selectedItem[0].name.label : 'loading...'}

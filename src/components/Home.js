@@ -5,6 +5,7 @@ import Locations from '../components/Locations'
 import Masthead from '../components/Masthead'
 import Nav from '../components/Nav'
 import GetQuote from '../components/GetQoute'
+import Estimate from '../components/Estimate'
 
 import Restful, {FetchData} from "../tools/Restful"
 
@@ -63,6 +64,7 @@ class Home extends React.Component {
                 
                 <Route path="/" render={(props) => <Hero locations={this.state.locations} eventSpaces={this.state.eventSpaces} {...props}/>} />
                 <Route path="/plan" render={(props) => (
+                    <>
                     <GetQuote 
                         locations={this.state.locations}
                         categories={this.state.categories}
@@ -74,7 +76,21 @@ class Home extends React.Component {
                         tags={this.props.Tags}
                         addItemToCart={this.addItemToCart}
                         cart={this.state.cart}
-                    /> )} 
+                    /> 
+                    {
+                        this.state.cart.length > 0 ?
+                            <div className="estimate-container">
+                                <Estimate 
+                                    cart={this.state.cart} 
+                                    categories={this.state.categories}
+                                />
+                            </div>
+                        :   <span></span>
+                    
+                    }
+                    
+                    </>
+                    )} 
                     
                 /> 
                 <Locations 
